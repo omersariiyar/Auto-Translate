@@ -59,7 +59,7 @@ python auto_reverse_e.py
 - ✅ Noktalama koruması | Punctuation preservation
 
 ### Auto Reverse Ə
-- ✅ 626+ kelime eşleşmesi | 626+ word mappings
+- ✅ 2500+ kelime eşleşmesi | 626+ word mappings
 - ✅ Türkçe → Azerbaycan Türkçesi | Turkish → Azerbaijani Turkish
 - ✅ `Ctrl + Sol Shift` ile manuel ə ekleme | Manual ə insertion with `Ctrl + Left Shift`
 - ✅ JSON tabanlı sözlük | JSON-based dictionary
