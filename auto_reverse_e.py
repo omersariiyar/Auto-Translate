@@ -35,6 +35,7 @@ MAPPING = {k.lower(): v for k, v in MAPPING.items()}
 
 controller = Controller()
 pressed_buffer = []  # list of characters of current word
+word_history = []  # stores previous words for multi-word matching
 is_replacing = threading.Event()  # flag: set when we are performing replacement
 pressed_keys = set()  # for hotkey combinations
 
@@ -117,15 +118,53 @@ def flush_buffer_check_and_maybe_replace():
     if not pressed_buffer:
         return
     
-    word = ''.join(pressed_buffer)
-    lower = word.lower()
+    current_word = ''.join(pressed_buffer)
+    current_word_lower = current_word.lower()
     
-    # Check single word only
-    if lower in MAPPING:
-        replacement_text = MAPPING[lower]
-        replacement_text = adjust_case(word, replacement_text)
-        total_length = len(word)
+    # First, try two-word combination with previous word (if exists)
+    if word_history:
+        # Only check the last TYPED word (not replaced words from mapping)
+        # We need to track which words in history are original vs replacements
+        previous_word = word_history[-1]
+        two_word_phrase = f"{previous_word} {current_word}"
+        two_word_phrase_lower = two_word_phrase.lower()
+        
+        if two_word_phrase_lower in MAPPING:
+            replacement_text = MAPPING[two_word_phrase_lower]
+            replacement_text = adjust_case(two_word_phrase, replacement_text)
+            
+            # Total length = previous word + space + current word
+            total_length = len(previous_word) + 1 + len(current_word)
+            
+            print(f"Match found (2 words): '{two_word_phrase}' → '{replacement_text}'")
+            
+            threading.Thread(target=replace_last_word, args=(replacement_text, total_length), daemon=True).start()
+            
+            # Remove the previous word from history since we replaced it
+            word_history.pop()
+            # Don't add replacement to history (it shouldn't be part of next match)
+            
+            pressed_buffer.clear()
+            return
+    
+    # If no two-word match, try single word match
+    if current_word_lower in MAPPING:
+        replacement_text = MAPPING[current_word_lower]
+        replacement_text = adjust_case(current_word, replacement_text)
+        total_length = len(current_word)
+        
+        print(f"Match found (1 word): '{current_word}' → '{replacement_text}'")
+        
         threading.Thread(target=replace_last_word, args=(replacement_text, total_length), daemon=True).start()
+        
+        # Don't store replaced word in history
+        pressed_buffer.clear()
+        return
+    
+    # No match found, store current word in history for potential two-word match next time
+    word_history.append(current_word)
+    if len(word_history) > 5:  # Keep only last 5 words
+        word_history.pop(0)
     
     pressed_buffer.clear()
 
