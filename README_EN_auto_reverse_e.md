@@ -35,9 +35,28 @@ pip install pynput pyperclip
 ```
 
 ### Step 3: Run the Tool
+
+#### Method 1: Using Command Line
 ```bash
 python C:\auto_reverse_e.py
 ```
+
+#### Method 2: Using Batch File (Quick Start)
+
+For faster access, use the included `auto_ə.bat` file:
+
+1. Open `auto_ə.bat` in a text editor
+2. Update the path to your script location:
+   ```batch
+   @echo off
+   cd C:\Program Files\Auto_Translate
+   python auto_reverse_e.py
+   pause
+   ```
+3. Save the file
+4. Double-click `auto_ə.bat` to run
+
+> **Tip**: Create a shortcut to `auto_ə.bat` on your desktop for instant access!
 
 ## 💡 Usage Guide
 

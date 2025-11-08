@@ -35,9 +35,28 @@ pip install pynput pyperclip
 ```
 
 ### Adım 3: Aracı Çalıştırın
+
+#### Yöntem 1: Komut Satırı Kullanarak
 ```bash
 python C:\auto_reverse_e.py
 ```
+
+#### Yöntem 2: Batch Dosyası Kullanarak (Hızlı Başlatma)
+
+Daha hızlı erişim için dahil edilen `auto_ə.bat` dosyasını kullanın:
+
+1. `auto_ə.bat` dosyasını bir metin editöründe açın
+2. Script konumunuza göre yolu güncelleyin:
+   ```batch
+   @echo off
+   cd C:\Program Files\Auto_Translate
+   python auto_reverse_e.py
+   pause
+   ```
+3. Dosyayı kaydedin
+4. Çalıştırmak için `auto_ə.bat` dosyasına çift tıklayın
+
+> **İpucu**: Anında erişim için masaüstünüze `auto_ə.bat` kısayolu oluşturun!
 
 ## 💡 Kullanım Kılavuzu
 
