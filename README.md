@@ -77,7 +77,7 @@ python auto_reverse_e.py
 
 ## 📝 Lisans | License
 
-MIT License
+This project is open-source. You’re free to modify, distribute, or use it for personal and educational purposes.
 
 ---
 
